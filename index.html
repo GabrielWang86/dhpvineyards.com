@@ -1,0 +1,784 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>大红泼酒庄 · Da Hong Po Vineyards</title>
+<meta name="description" content="云南香格里拉梅里雪山产区。海拔3068米。Altitude 3,068 Meters.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&family=Noto+Serif+SC:wght@300;400;500;600;700;900&display=swap" rel="stylesheet">
+<style>
+:root {
+  --ink: #1A1628;
+  --paper: #F7F4EF;
+  --gold: #B8A088;
+  --muted: #967D64;
+  --lavender: #644B64;
+  --warm: #8C6E5A;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: "Noto Serif SC", "SimSun", serif;
+  -webkit-font-smoothing: antialiased;
+  color: var(--ink);
+  background: var(--paper);
+  line-height: 1.8;
+}
+
+/* ===== Typography ===== */
+.en { font-family: "Montserrat", sans-serif; }
+.serif { font-family: "Noto Serif SC", serif; }
+
+h1, h2, h3 { font-weight: 700; }
+h2 {
+  font-size: clamp(36px, 5vw, 64px);
+  letter-spacing: .02em;
+  line-height: 1.2;
+}
+
+/* ===== Language Toggle (inside nav) ===== */
+.lang-toggle {
+  display: flex; gap: 0; align-items: center;
+  justify-self: end;
+}
+.lang-toggle .sep {
+  width: 1px; height: 14px;
+  background: rgba(255,255,255,.2);
+  margin: 0 8px;
+}
+.lang-toggle button {
+  font-family: "Montserrat", sans-serif;
+  font-size: 11px; font-weight: 500; letter-spacing: .06em;
+  padding: 4px 8px; border: none;
+  background: transparent; color: rgba(255,255,255,.45);
+  cursor: pointer; transition: color .25s;
+}
+.lang-toggle button.active {
+  color: #fff;
+}
+.lang-toggle button:hover { color: #fff; }
+
+/* ===== Nav ===== */
+.nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 999;
+  padding: 20px 40px;
+  display: grid; grid-template-columns: 1fr auto 1fr; align-items: center;
+  transition: background .4s, padding .4s;
+}
+.nav.scrolled {
+  background: rgba(26,22,40,.92); backdrop-filter: blur(16px);
+  padding: 12px 40px;
+}
+.nav-logo { height: 96px; opacity: 0; transition: opacity .4s; }
+.nav.scrolled .nav-logo { opacity: 1; }
+.nav-links { display: flex; gap: 36px; list-style: none; justify-self: center; }
+.nav-links a {
+  font-family: "Montserrat", sans-serif;
+  font-size: 12px; font-weight: 500; letter-spacing: .12em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,.6); text-decoration: none;
+  transition: color .25s;
+}
+.nav-links a:hover { color: #fff; }
+
+/* ===== Hero ===== */
+.hero {
+  position: relative; min-height: 100vh; display: flex;
+  align-items: center; justify-content: center;
+  background: var(--ink);
+  overflow: hidden;
+}
+.hero-bg {
+  position: absolute; inset: 0;
+  background: url('images/hero-bg.jpg') center/cover no-repeat;
+  opacity: .55;
+}
+.hero-overlay {
+  position: absolute; inset: 0;
+  background: linear-gradient(180deg,
+    rgba(26,22,40,.35) 0%,
+    rgba(26,22,40,.6) 60%,
+    rgba(26,22,40,.85) 100%
+  );
+}
+.hero-content {
+  position: relative; z-index: 2; text-align: center;
+  display: flex; flex-direction: column; align-items: center; gap: 28px;
+}
+.hero-logo { width: min(280px, 60vw); }
+.hero-tagline {
+  font-family: "Noto Serif SC", serif;
+  font-size: clamp(48px, 8vw, 96px); font-weight: 900;
+  color: #fff; letter-spacing: .06em; line-height: 1;
+}
+.hero-tagline .en-tl {
+  display: block;
+  font-family: "Montserrat", sans-serif;
+  font-size: clamp(16px, 2.2vw, 24px); font-weight: 300;
+  letter-spacing: .2em; margin-top: 12px;
+  color: rgba(255,255,255,.5);
+}
+.hero-sub {
+  font-size: clamp(15px, 2vw, 20px);
+  color: rgba(255,255,255,.5); letter-spacing: .08em;
+}
+.hero-scroll {
+  position: absolute; bottom: 40px; left: 50%; transform: translateX(-50%);
+  z-index: 2;
+  display: flex; flex-direction: column; align-items: center; gap: 8px;
+}
+.hero-scroll span {
+  font-family: "Montserrat", sans-serif;
+  font-size: 10px; letter-spacing: .2em;
+  color: rgba(255,255,255,.3);
+}
+.hero-scroll .line {
+  width: 1px; height: 48px;
+  background: linear-gradient(180deg, rgba(255,255,255,.4), transparent);
+  animation: scrollPulse 2s ease-in-out infinite;
+}
+@keyframes scrollPulse {
+  0%,100% { opacity: .3; }
+  50% { opacity: 1; }
+}
+
+/* ===== Section Common ===== */
+section { padding: 120px 40px; position: relative; overflow: hidden; }
+.section-inner { max-width: 1080px; margin: 0 auto; }
+.section-label {
+  font-family: "Montserrat", sans-serif;
+  font-size: 11px; font-weight: 600; letter-spacing: .2em;
+  text-transform: uppercase; margin-bottom: 24px;
+}
+.section-label.gold { color: var(--gold); }
+.section-label.muted { color: var(--muted); }
+
+/* ===== Story Section ===== */
+.story { background: var(--paper); }
+.story .section-inner { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center; }
+.story-text { display: flex; flex-direction: column; gap: 32px; }
+.story-text p { font-size: clamp(16px, 2vw, 19px); line-height: 1.9; color: rgba(26,22,40,.75); }
+.story-visual {
+  position: relative;
+  aspect-ratio: 3/4; overflow: hidden; border-radius: 2px;
+  background: var(--lavender);
+}
+.story-visual img {
+  width: 100%; height: 100%; object-fit: cover;
+  filter: brightness(.65);
+}
+.story-visual::after {
+  content: "";
+  position: absolute; inset: 0;
+  background: linear-gradient(180deg, rgba(26,22,40,.15) 0%, rgba(26,22,40,.3) 100%);
+  pointer-events: none;
+}
+
+/* ===== Terroir Section ===== */
+.terroir {
+  background: var(--ink); color: var(--paper);
+}
+.terroir .section-inner { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center; }
+.terroir-text { display: flex; flex-direction: column; gap: 24px; }
+.terroir-text p { font-size: clamp(16px, 2vw, 19px); line-height: 1.9; color: rgba(247,244,239,.7); }
+.terroir-facts { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 32px 24px; margin-top: 24px; }
+.terroir-fact { display: flex; flex-direction: column; gap: 4px; }
+.terroir-fact .num {
+  font-family: "Montserrat", sans-serif;
+  font-size: 36px; font-weight: 300; color: var(--gold); line-height: 1;
+}
+.terroir-fact .lbl {
+  font-size: 14px; color: rgba(247,244,239,.45); letter-spacing: .04em;
+}
+.terroir-visual {
+  position: relative;
+  aspect-ratio: 4/5; overflow: hidden; border-radius: 2px;
+}
+.terroir-visual img {
+  width: 100%; height: 100%; object-fit: cover;
+  filter: brightness(.65);
+}
+.terroir-visual::after {
+  content: "";
+  position: absolute; inset: 0;
+  background: linear-gradient(180deg, rgba(26,22,40,.15) 0%, rgba(26,22,40,.3) 100%);
+  pointer-events: none;
+}
+
+/* ===== Wines Section ===== */
+.wines { background: var(--paper); }
+.wine-series { margin-bottom: 80px; }
+.wine-series:last-child { margin-bottom: 0; }
+.wine-series-header {
+  display: flex; align-items: baseline; gap: 16px; margin-bottom: 48px;
+}
+.wine-series-header .name {
+  font-size: clamp(28px, 3.5vw, 40px); font-weight: 700;
+}
+.wine-series-header .tag {
+  font-family: "Montserrat", sans-serif;
+  font-size: 11px; font-weight: 500; letter-spacing: .15em;
+  color: var(--muted); text-transform: uppercase;
+}
+.wine-series-desc {
+  font-size: 16px; color: rgba(26,22,40,.55); margin-bottom: 48px;
+  max-width: 560px; line-height: 1.8;
+}
+.wine-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 48px 32px;
+}
+.wine-card {
+  display: flex; flex-direction: column; align-items: center; gap: 16px;
+  text-align: center;
+}
+.wine-card .bottle {
+  width: 100%; max-width: 140px;
+  aspect-ratio: 3/7;
+  position: relative;
+}
+.wine-card .bottle img {
+  width: 100%; height: 100%; object-fit: contain;
+  filter: drop-shadow(0 8px 24px rgba(26,22,40,.12));
+  transition: transform .4s ease, filter .4s ease;
+}
+.wine-card:hover .bottle img {
+  transform: translateY(-6px);
+  filter: drop-shadow(0 16px 32px rgba(26,22,40,.2));
+}
+.wine-card .name-cn {
+  font-size: 17px; font-weight: 600; letter-spacing: .04em;
+}
+.wine-card .name-en {
+  font-family: "Montserrat", sans-serif;
+  font-size: 11px; letter-spacing: .1em; color: var(--muted);
+  text-transform: uppercase;
+}
+.wine-card .note {
+  font-size: 13px; color: rgba(26,22,40,.4); line-height: 1.6;
+  max-width: 160px;
+}
+
+/* ===== Connect Section ===== */
+.connect {
+  background: var(--ink); color: var(--paper);
+  text-align: center;
+}
+.connect .section-inner {
+  display: flex; flex-direction: column; align-items: center; gap: 48px;
+}
+.connect-cta {
+  font-size: clamp(24px, 3.5vw, 40px); font-weight: 700;
+  line-height: 1.4; letter-spacing: .03em;
+}
+.connect-cta .gold { color: var(--gold); }
+.qr-box {
+  background: #fff; padding: 20px; border-radius: 4px;
+  display: inline-block;
+  box-shadow: 0 8px 40px rgba(0,0,0,.3);
+}
+.qr-box img { width: 200px; height: 200px; display: block; }
+.qr-label {
+  font-family: "Montserrat", sans-serif;
+  font-size: 11px; letter-spacing: .15em; color: rgba(247,244,239,.4);
+  margin-top: 16px;
+}
+.email-link {
+  margin-top: 8px;
+  font-family: "Montserrat", sans-serif;
+  font-size: 13px; letter-spacing: .04em;
+  color: rgba(247,244,239,.35);
+}
+.email-link a {
+  color: inherit; text-decoration: none;
+  transition: color .25s;
+}
+.email-link a:hover { color: var(--gold); }
+.ecosystem {
+  margin-top: 24px; padding-top: 40px;
+  border-top: 1px solid rgba(247,244,239,.08);
+  display: flex; gap: 64px; justify-content: center; flex-wrap: wrap;
+}
+.eco-card {
+  display: flex; flex-direction: column; align-items: center; gap: 0;
+  text-decoration: none; transition: opacity .25s;
+}
+.eco-logo-wrap {
+  display: flex; flex-direction: column; align-items: center; justify-content: flex-end;
+  height: 180px; gap: 6px;
+}
+.eco-card:hover { opacity: .8; }
+.eco-card .eco-logo {
+  object-fit: contain; opacity: .6;
+}
+.eco-card span {
+  font-size: 13px; color: rgba(247,244,239,.3); letter-spacing: .06em;
+}
+.eco-card .eco-slogan {
+  font-family: "Montserrat", sans-serif;
+  font-size: 10px; letter-spacing: .15em; color: rgba(247,244,239,.2);
+}
+
+/* ===== Product Sheet Flyout ===== */
+.flyout {
+  position: fixed; right: 24px; top: 50%; transform: translateY(-50%);
+  z-index: 2000; pointer-events: none;
+  opacity: 0; transition: opacity .3s ease;
+}
+.flyout-left { right: auto; left: 24px; }
+.flyout.active { opacity: 1; }
+.flyout img {
+  height: 96vh; width: auto; display: block;
+  border-radius: 4px;
+  box-shadow: 0 16px 48px rgba(0,0,0,.35);
+}
+
+/* ===== Footer ===== */
+footer {
+  background: #0F0D16; color: rgba(247,244,239,.3);
+  text-align: center; padding: 48px 40px;
+  font-size: 13px; line-height: 2; letter-spacing: .04em;
+}
+.footer-logo { height: 112px; opacity: .4; margin-bottom: 16px; }
+
+/* ===== Responsive ===== */
+@media (max-width: 768px) {
+  section { padding: 80px 24px; }
+  .nav { padding: 16px 20px; }
+  .nav.scrolled { padding: 10px 20px; }
+  .nav-links { gap: 20px; }
+  .nav-links a { font-size: 10px; }
+
+  .story .section-inner,
+  .terroir .section-inner {
+    grid-template-columns: 1fr; gap: 48px;
+  }
+  .story-visual { order: -1; max-width: 320px; justify-self: center; }
+  .terroir-visual { order: -1; max-width: 320px; justify-self: center; }
+
+  .terroir-facts { gap: 24px 16px; }
+  .terroir-fact .num { font-size: 28px; }
+
+  .wine-grid { grid-template-columns: repeat(2, 1fr); gap: 32px 20px; }
+  .wine-card .bottle { max-width: 110px; }
+
+  .connect-cta { font-size: 24px; }
+  .ecosystem { gap: 24px; }
+  .eco-card .eco-logo, .eco-card .eco-logo-wrap { height: auto !important; }
+  .eco-card .eco-logo { height: 80px !important; }
+  .eco-card .eco-logo-wrap { height: 100px !important; }
+
+  .footer-logo { height: 64px; }
+
+  .flyout img { height: 60vh; }
+  .flyout { right: 8px; }
+  .flyout-left { left: 8px; }
+
+  .terroir-facts { grid-template-columns: repeat(2, 1fr); }
+
+  .lang-toggle .sep { margin: 0 4px; }
+  .lang-toggle button { font-size: 10px; padding: 2px 6px; }
+
+  .nav-logo { height: 48px; }
+}
+
+@media (max-width: 400px) {
+  .wine-grid { grid-template-columns: 1fr 1fr; gap: 28px 16px; }
+  .wine-card .bottle { max-width: 100px; }
+  .wine-card .name-cn { font-size: 14px; }
+  .wine-card .note { font-size: 11px; max-width: 130px; }
+
+  .terroir-facts { grid-template-columns: 1fr 1fr; gap: 20px 12px; }
+  .terroir-fact .num { font-size: 22px; }
+
+  .nav-links { gap: 12px; }
+  .nav-links a { font-size: 9px; }
+}
+</style>
+</head>
+<body>
+
+<!-- Nav -->
+<nav class="nav" id="nav">
+  <img class="nav-logo" src="images/logo-white.png" alt="大红泼">
+  <ul class="nav-links">
+    <li><a href="#story" data-i18n="nav.story">故事</a></li>
+    <li><a href="#terroir" data-i18n="nav.terroir">风土</a></li>
+    <li><a href="#wines" data-i18n="nav.wines">酒款</a></li>
+    <li><a href="#connect" data-i18n="nav.connect">连接</a></li>
+  </ul>
+  <div class="lang-toggle">
+    <div class="sep"></div>
+    <button id="btn-cn" class="active" onclick="switchLang('cn')">中</button>
+    <button id="btn-en" onclick="switchLang('en')">EN</button>
+  </div>
+</nav>
+
+<!-- Hero -->
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-overlay"></div>
+  <div class="hero-content">
+    <img class="hero-logo" src="images/logo-white.png" alt="大红泼酒庄">
+    <h1 class="hero-tagline" data-i18n="hero.tagline">海拔3068<span class="en-tl">Altitude 3,068 Meters</span></h1>
+    <p class="hero-sub" data-i18n="hero.subtitle">云南香格里拉 · 梅里雪山产区</p>
+  </div>
+  <div class="hero-scroll">
+    <span data-i18n="hero.scroll">向下</span>
+    <div class="line"></div>
+  </div>
+</section>
+
+<!-- Story -->
+<section class="story" id="story">
+  <div class="section-inner">
+    <div class="story-text">
+      <div class="section-label muted" data-i18n="story.label">我们的故事</div>
+      <h2 data-i18n="story.heading">纯净，热烈</h2>
+      <p data-i18n="story.p1">
+        大红泼酒庄创立于2020年，坐落在云南香格里拉梅里雪山产区，海拔3400米。横断山脉深处，三江并流之地。冰川融水灌溉，高原阳光照耀。
+      </p>
+      <p data-i18n="story.p2">
+        我们相信好酒是种出来的——70%在葡萄园，30%在酿造间。每一瓶大红泼，都是这片极限之地最诚实的表达。
+      </p>
+      <p data-i18n="story.p3">
+        这里的葡萄藤长在海拔2200到3068米的山坡上。强紫外线、平均20度昼夜温差、比世界上很多产区多出30到60天的生长期——果实小、皮厚、风味高度浓缩。好的酿造，从好的原料开始——时间够长、阳光够烈、夜晚够凉。
+      </p>
+      <p data-i18n="story.p4">
+        最终的酒应该是什么样？平衡的，优雅的，纯净的，热烈的。像这座山本身。
+      </p>
+    </div>
+    <div class="story-visual">
+      <img src="images/oak-barrel.jpg" alt="大红泼橡木桶">
+    </div>
+  </div>
+</section>
+
+<!-- Terroir -->
+<section class="terroir" id="terroir">
+  <div class="section-inner">
+    <div class="terroir-visual">
+      <img src="images/jiangpo-aerial.jpg" alt="江坡葡萄园">
+    </div>
+    <div class="terroir-text">
+      <div class="section-label gold" data-i18n="terroir.label">风土</div>
+      <h2 data-i18n="terroir.heading">横断山脉的馈赠</h2>
+      <p data-i18n="terroir.p1">
+        高原寒温带山地气候。低纬度、超高海拔、超强紫外线、平均20度昼夜温差。葡萄生长季比世界上很多产区多出30–60天——足够让风味物质缓慢而深刻地积累。
+      </p>
+      <p data-i18n="terroir.p2">
+        四个村子、六种微气候。赤霞珠、品丽珠、美乐、霞多丽……每一块土地都被单独对待，每一株葡萄都有自己的名字。
+      </p>
+      <div class="terroir-facts">
+        <div class="terroir-fact">
+          <span class="num">2,200–3,068<span style="font-size:16px">m</span></span>
+          <span class="lbl" data-i18n="terroir.altitude">葡萄园海拔范围</span>
+        </div>
+        <div class="terroir-fact">
+          <span class="num">20<span style="font-size:16px">°C</span></span>
+          <span class="lbl" data-i18n="terroir.daynight">昼夜温差</span>
+        </div>
+        <div class="terroir-fact">
+          <span class="num">+30–60<span style="font-size:16px">d</span></span>
+          <span class="lbl" data-i18n="terroir.growing">超长生长期</span>
+        </div>
+        <div class="terroir-fact">
+          <span class="num">18<span style="font-size:16px">yr</span></span>
+          <span class="lbl" data-i18n="terroir.vines">最老藤龄</span>
+        </div>
+        <div class="terroir-fact">
+          <span class="num">≥11<span style="font-size:16px"> UVI</span></span>
+          <span class="lbl" data-i18n="terroir.uv">年均紫外线指数</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Wines -->
+<section class="wines" id="wines">
+  <div class="section-inner">
+    <div class="section-label muted" data-i18n="wines.label">我们的酒</div>
+
+    <!-- 大红泼系列 -->
+    <div class="wine-series">
+      <div class="wine-series-header">
+        <span class="name">大红泼</span>
+        <span class="tag">DA HONG PO RANGE · FLAGSHIP</span>
+      </div>
+      <p class="wine-series-desc" data-i18n="wines.dhp.desc">
+        旗舰系列。最优质果实，逐粒筛选。法国细纹理橡木桶，天然低温陈年。结构严谨，纯净优雅，强大的陈年潜力。
+      </p>
+      <div class="wine-grid">
+        <div class="wine-card" data-sheet="images/sheet-dhp-red.png">
+          <div class="bottle"><img src="images/bottle-dhp-red.png" alt="大红泼红"></div>
+          <div class="name-cn">大红泼红</div>
+          <div class="name-en">Da Hong Po Red</div>
+          <div class="note" data-i18n="wines.dhp.dhpred">精选老藤、雪山与高紫外线孕育、酒体醇厚、陈年潜力强大</div>
+        </div>
+        <div class="wine-card" data-sheet="images/sheet-no5-red.png">
+          <div class="bottle"><img src="images/bottle-no5-red.png" alt="5号红"></div>
+          <div class="name-cn">5号红</div>
+          <div class="name-en">No.5 Red</div>
+          <div class="note" data-i18n="wines.dhp.no5red">高海拔纯净典范、酒庄旗舰款红葡萄酒。紧致结构与优雅细腻并存。 ——酿酒师说</div>
+        </div>
+        <div class="wine-card" data-sheet="images/sheet-no5-white.png">
+          <div class="bottle"><img src="images/bottle-no5-white.png" alt="5号白"></div>
+          <div class="name-cn">5号白</div>
+          <div class="name-en">No.5 White</div>
+          <div class="note" data-i18n="wines.dhp.no5white">高海拔纯净典范、酒庄旗舰款白葡萄酒。果实与咸鲜矿物感双重支撑清冽而深邃。 ——酿酒师说</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 夜猫子系列 -->
+    <div class="wine-series">
+      <div class="wine-series-header">
+        <span class="name">夜猫子</span>
+        <span class="tag">C'EST CHOUETTE RANGE</span>
+      </div>
+      <p class="wine-series-desc" data-i18n="wines.cc.desc">
+        亲民系列。高性价比，自由表达。果香明快，口感鲜活。没有门槛，打开就喝。每一瓶都是香格里拉的味道。
+      </p>
+      <div class="wine-grid">
+        <div class="wine-card" data-sheet="images/sheet-kawa.png">
+          <div class="bottle"><img src="images/bottle-kawa.png" alt="神山"></div>
+          <div class="name-cn">神山</div>
+          <div class="name-en">Kawa</div>
+          <div class="note" data-i18n="wines.cc.kawa">100%手工筛选霞多丽、教科书般的雪域高原、优质白葡萄酒典范</div>
+        </div>
+        <div class="wine-card" data-sheet="images/sheet-cc-white.png">
+          <div class="bottle"><img src="images/bottle-cc-white.png" alt="夜猫子白"></div>
+          <div class="name-cn">夜猫子白</div>
+          <div class="name-en">Chouette White</div>
+          <div class="note" data-i18n="wines.cc.white">金奖酒，一口爱上香格里拉</div>
+        </div>
+        <div class="wine-card" data-sheet="images/sheet-cc-red.png" data-position="left">
+          <div class="bottle"><img src="images/bottle-cc-red.png" alt="夜猫子红"></div>
+          <div class="name-cn">夜猫子红</div>
+          <div class="name-en">Chouette Red</div>
+          <div class="note" data-i18n="wines.cc.red">层层展开的韵味、是高海拔的热烈与深邃</div>
+        </div>
+        <div class="wine-card" data-sheet="images/sheet-ice.png" data-position="left">
+          <div class="bottle"><img src="images/bottle-ice.png" alt="冰酒"></div>
+          <div class="name-cn">小兰花冰酒</div>
+          <div class="name-en">Ice Wine</div>
+          <div class="note" data-i18n="wines.cc.ice">似初雪融化、清冽中渗出甘甜</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Connect -->
+<section class="connect" id="connect">
+  <div class="section-inner">
+    <div class="section-label gold" data-i18n="connect.label">连接我们</div>
+    <h2 class="connect-cta" data-i18n="connect.cta">
+      想买酒？想看看我们？<br>
+      <span class="gold">关注公众号，从这里开始。</span>
+    </h2>
+    <div class="qr-box">
+      <img src="images/qrcode.jpg" alt="大红泼公众号">
+    </div>
+    <p class="qr-label" data-i18n="connect.qrlabel">微信扫码 · 关注大红泼酒庄</p>
+    <p class="email-link" data-i18n="connect.email">联系创始人：<a href="mailto:gabriel.wang@263.net">gabriel.wang@263.net</a></p>
+    <div class="ecosystem">
+      <a class="eco-card" href="#">
+        <div class="eco-logo-wrap">
+          <img src="images/logo-dizzy-punch.png" alt="微醺撞击" class="eco-logo" style="height:144px;">
+          <span class="eco-slogan">wines on the trip</span>
+        </div>
+        <span style="margin-top:16px;" data-i18n="connect.bar">香格里拉古城酒吧</span>
+      </a>
+      <a class="eco-card" href="#">
+        <div class="eco-logo-wrap">
+          <svg class="eco-logo" style="height:144px;" viewBox="0 0 200 100" xmlns="http://www.w3.org/2000/svg">
+            <path d="M43,32 C43,32 57,15 70,14 C83,12 90,30 100,27 C110,24 113,19 130,20 C147,22 157,27 160,26" stroke="#D4226E" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+            <text x="100" y="63" text-anchor="middle" font-family="'Noto Serif SC', 'SimSun', serif" font-weight="700" font-size="14" letter-spacing="0.12em" fill="#FDFAF3">两花旅行</text>
+            <text x="100" y="94" text-anchor="middle" font-family="'Montserrat', sans-serif" font-weight="300" font-size="7" letter-spacing="0.18em" fill="#D4226E">to trip with wines</text>
+          </svg>
+        </div>
+        <span style="margin-top:16px;" data-i18n="connect.travel">葡萄酒主题旅行</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer>
+  <img class="footer-logo" src="images/logo-white.png" alt="大红泼">
+  <p>大红泼酒庄 · Da Hong Po Vineyards</p>
+  <p style="opacity:.5" data-i18n="footer.copy">云南香格里拉德钦县 · 梅里雪山产区 &copy; 2026</p>
+</footer>
+
+<!-- Product Sheet Flyout -->
+<div id="flyout-right" class="flyout"><img src="" alt=""></div>
+<div id="flyout-left" class="flyout flyout-left"><img src="" alt=""></div>
+
+<script>
+// ===== i18n Dictionary =====
+const dict = {
+  'nav.story':    { cn: '故事',   en: 'Story' },
+  'nav.terroir':  { cn: '风土',   en: 'Terroir' },
+  'nav.wines':    { cn: '酒款',   en: 'Wines' },
+  'nav.connect':  { cn: '连接',   en: 'Connect' },
+
+  'hero.tagline': { cn: '海拔3068<span class="en-tl">Altitude 3,068 Meters</span>', en: 'Altitude 3,068 Meters<span class="en-tl" style="font-family:\'Noto Serif SC\',serif;font-weight:900">海拔3068</span>' },
+  'hero.subtitle':{ cn: '云南香格里拉 · 梅里雪山产区', en: 'Shangri-La, Yunnan · Meili Snow Mountain' },
+  'hero.scroll':  { cn: '向下',   en: 'Scroll' },
+
+  'story.label':  { cn: '我们的故事', en: 'Our Story' },
+  'story.heading':{ cn: '纯净，热烈', en: 'Purity & Passion' },
+  'story.p1':     { cn: '大红泼酒庄创立于2020年，坐落在云南香格里拉梅里雪山产区，海拔3400米。横断山脉深处，三江并流之地。冰川融水灌溉，高原阳光照耀。',
+                    en: 'Founded in 2020, Da Hong Po Vineyards sits at 3,400m in the Meili Snow Mountain wine region of Shangri-La, Yunnan. Deep in the Hengduan Mountains, where three rivers run parallel — irrigated by glacial meltwater, bathed in high-altitude sunlight.' },
+  'story.p2':     { cn: '我们相信好酒是种出来的——70%在葡萄园，30%在酿造间。每一瓶大红泼，都是这片极限之地最诚实的表达。',
+                    en: 'We believe great wine is grown — 70% in the vineyard, 30% in the cellar. Every bottle of Da Hong Po is the most honest expression of this extreme land.' },
+  'story.p3':     { cn: '这里的葡萄藤长在海拔2200到3068米的山坡上。强紫外线、平均20度昼夜温差、比世界上很多产区多出30到60天的生长期——果实小、皮厚、风味高度浓缩。好的酿造，从好的原料开始——时间够长、阳光够烈、夜晚够凉。',
+                    en: 'Our vines grow on mountain slopes between 2,200 and 3,068 meters. Intense UV, an average 20°C diurnal shift, a growing season 30–60 days longer than many regions around the world — small berries, thick skins, deeply concentrated flavors. Great winemaking starts with great fruit — long days, fierce sun, and cold nights.' },
+  'story.p4':     { cn: '最终的酒应该是什么样？平衡的，优雅的，纯净的，热烈的。像这座山本身。',
+                    en: 'What should the wine taste like? Balanced. Elegant. Pure. Fierce. Like the mountain itself.' },
+
+  'terroir.label':{ cn: '风土',   en: 'Terroir' },
+  'terroir.heading':{ cn: '横断山脉的馈赠', en: 'A Gift from the Hengduan Mountains' },
+  'terroir.p1':   { cn: '高原寒温带山地气候。低纬度、超高海拔、超强紫外线、平均20度昼夜温差。葡萄生长季比世界上很多产区多出30–60天——足够让风味物质缓慢而深刻地积累。',
+                    en: 'Plateau cold-temperate mountain climate. Low latitude, extreme altitude, extreme UV, an average 20°C diurnal shift. The growing season lasts 30–60 days longer than many regions around the world — enough time for flavors to accumulate slowly and deeply.' },
+  'terroir.p2':   { cn: '四个村子、六种微气候。赤霞珠、霞多丽、美乐、品丽珠……每一块土地都被单独对待，每一株葡萄都有自己的名字。',
+                    en: 'Four villages, six microclimates. Cabernet Sauvignon, Cabernet Franc, Merlot, Chardonnay… Every plot is treated individually. Every vine has its own name.' },
+  'terroir.altitude':{ cn: '葡萄园海拔范围', en: 'Vineyard Altitude' },
+  'terroir.daynight':{ cn: '昼夜温差', en: 'Diurnal Shift' },
+  'terroir.growing':{ cn: '超长生长期', en: 'Extended Growing Season' },
+  'terroir.vines':{ cn: '最老藤龄', en: 'Oldest Vines' },
+  'terroir.uv':   { cn: '年均紫外线指数', en: 'Annual UV Index' },
+
+  'wines.label':  { cn: '我们的酒', en: 'Our Wines' },
+  'wines.dhp.desc':{ cn: '旗舰系列。最优质果实，逐粒筛选。法国细纹理橡木桶，天然低温陈年。结构严谨，纯净优雅，强大的陈年潜力。',
+                    en: 'Flagship series. Finest fruit, berry by berry. French fine-grain oak, natural cool-temperature aging. Structured, pure, elegant — built to age a decade and more.' },
+  'wines.dhp.dhpred':{ cn: '精选老藤、雪山与高紫外线孕育、酒体醇厚、陈年潜力强大', en: 'Old vines, snow mountain UV, full-bodied, superb aging potential' },
+  'wines.dhp.no5red':{ cn: '高海拔纯净典范、酒庄旗舰款红葡萄酒。紧致结构与优雅细腻并存。 ——酿酒师说', en: 'High-altitude benchmark, the estate\'s flagship red. Tight structure meets elegant finesse. —Winemaker' },
+  'wines.dhp.no5white':{ cn: '高海拔纯净典范、酒庄旗舰款白葡萄酒。果实与咸鲜矿物感双重支撑清冽而深邃。 ——酿酒师说', en: 'High-altitude benchmark, the estate\'s flagship white. Fruit and savory minerality — piercing clarity with depth. —Winemaker' },
+  'wines.cc.desc':{ cn: '亲民系列。高性价比，自由表达。果香明快，口感鲜活。没有门槛，打开就喝。每一瓶都是香格里拉的味道。',
+                    en: 'Approachable series. High value, free expression. Bright fruit, lively palate. No barrier — just open and drink. Every bottle tastes like Shangri-La.' },
+  'wines.cc.kawa':{ cn: '100%手工筛选霞多丽、教科书般的雪域高原、优质白葡萄酒典范', en: '100% hand-sorted Chardonnay, a textbook snow-plateau white, benchmark of quality' },
+  'wines.cc.white':{ cn: '金奖酒，一口爱上香格里拉', en: 'Gold medal winner. Fall in love with Shangri-La in one sip.' },
+  'wines.cc.red':{ cn: '层层展开的韵味、是高海拔的热烈与深邃', en: 'Layer upon layer — the warmth and depth of high altitude' },
+  'wines.cc.ice':{ cn: '似初雪融化、清冽中渗出甘甜', en: 'Like the first snow melting — sweetness seeping through the crisp.' },
+
+  'connect.label':{ cn: '连接我们', en: 'Connect' },
+  'connect.cta':  { cn: '想买酒？想看看我们？<br><span class="gold">关注公众号，从这里开始。</span>',
+                    en: 'Want to buy wine? Want to visit?<br><span class="gold">Follow our WeChat. Start here.</span>' },
+  'connect.qrlabel':{ cn: '微信扫码 · 关注大红泼酒庄', en: 'Scan with WeChat · Follow Da Hong Po Vineyards' },
+  'connect.email':{ cn: '联系创始人：<a href="mailto:gabriel.wang@263.net">gabriel.wang@263.net</a>', en: 'Contact the founder: <a href="mailto:gabriel.wang@263.net">gabriel.wang@263.net</a>' },
+  'connect.bar':  { cn: '香格里拉古城酒吧', en: 'Wine Bar · Shangri-La Old Town' },
+  'connect.travel':{ cn: '葡萄酒主题旅行', en: 'Wine-Themed Travel' },
+
+  'footer.copy':  { cn: '云南香格里拉德钦县 · 梅里雪山产区 &copy; 2026', en: 'Deqin County, Shangri-La, Yunnan · Meili Snow Mountain &copy; 2026' },
+};
+
+let currentLang = 'cn';
+
+function switchLang(lang) {
+  if (lang === currentLang) return;
+  currentLang = lang;
+
+  document.getElementById('btn-cn').classList.toggle('active', lang === 'cn');
+  document.getElementById('btn-en').classList.toggle('active', lang === 'en');
+  document.documentElement.lang = lang === 'cn' ? 'zh-CN' : 'en';
+
+  document.querySelectorAll('[data-i18n]').forEach(el => {
+    const key = el.getAttribute('data-i18n');
+    if (dict[key] && dict[key][lang]) {
+      el.innerHTML = dict[key][lang];
+    }
+  });
+}
+
+// ===== Nav scroll effect =====
+const nav = document.getElementById('nav');
+window.addEventListener('scroll', () => {
+  nav.classList.toggle('scrolled', window.scrollY > 60);
+});
+
+// ===== Fade-in on scroll =====
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.style.opacity = '1';
+      entry.target.style.transform = 'translateY(0)';
+    }
+  });
+}, { threshold: 0.15, rootMargin: '0px 0px -40px 0px' });
+
+document.querySelectorAll('section').forEach(s => {
+  s.style.opacity = '0';
+  s.style.transform = 'translateY(30px)';
+  s.style.transition = 'opacity .8s ease, transform .8s ease';
+  observer.observe(s);
+});
+
+// Trigger hero immediately
+document.querySelector('.hero').style.opacity = '1';
+document.querySelector('.hero').style.transform = 'translateY(0)';
+
+// ===== Product Sheet Flyout =====
+const flyoutR = document.getElementById('flyout-right');
+const flyoutL = document.getElementById('flyout-left');
+let hideTimer = null;
+let activeCard = null;
+
+function getFlyout(side) { return side === 'left' ? flyoutL : flyoutR; }
+
+function showCardSheet(card) {
+  clearTimeout(hideTimer);
+  flyoutR.classList.remove('active');
+  flyoutL.classList.remove('active');
+  const side = card.getAttribute('data-position') === 'left' ? 'left' : 'right';
+  const f = getFlyout(side);
+  f.querySelector('img').src = card.getAttribute('data-sheet');
+  f.classList.add('active');
+  activeCard = card;
+}
+
+function hideCardSheet(card) {
+  const side = card.getAttribute('data-position') === 'left' ? 'left' : 'right';
+  const f = getFlyout(side);
+  hideTimer = setTimeout(() => {
+    f.classList.remove('active');
+    if (activeCard === card) activeCard = null;
+  }, 120);
+}
+
+document.querySelectorAll('.wine-card[data-sheet]').forEach(card => {
+  card.addEventListener('mouseenter', () => showCardSheet(card));
+  card.addEventListener('mouseleave', () => hideCardSheet(card));
+  card.addEventListener('click', (e) => {
+    e.preventDefault();
+    if (activeCard === card) {
+      // Toggle off
+      clearTimeout(hideTimer);
+      const side = card.getAttribute('data-position') === 'left' ? 'left' : 'right';
+      getFlyout(side).classList.remove('active');
+      activeCard = null;
+    } else {
+      showCardSheet(card);
+    }
+  });
+});
+
+// Tap elsewhere to dismiss
+document.addEventListener('click', (e) => {
+  if (activeCard && !e.target.closest('.wine-card')) {
+    flyoutR.classList.remove('active');
+    flyoutL.classList.remove('active');
+    activeCard = null;
+  }
+});
+</script>
+</body>
+</html>

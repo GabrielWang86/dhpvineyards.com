@@ -165,18 +165,51 @@ section { padding: 120px 40px; position: relative; overflow: hidden; }
 .story-text p { font-size: clamp(16px, 2vw, 19px); line-height: 1.9; color: rgba(26,22,40,.75); }
 .story-visual {
   position: relative;
-  aspect-ratio: 3/4; overflow: hidden; border-radius: 2px;
+  aspect-ratio: 16/9; overflow: hidden; border-radius: 2px;
   background: var(--lavender);
+  cursor: pointer;
 }
-.story-visual img {
+.story-visual video {
   width: 100%; height: 100%; object-fit: cover;
-  filter: brightness(.65);
+  display: block;
 }
-.story-visual::after {
-  content: "";
+.story-visual .video-poster {
   position: absolute; inset: 0;
-  background: linear-gradient(180deg, rgba(26,22,40,.15) 0%, rgba(26,22,40,.3) 100%);
-  pointer-events: none;
+  background: center/cover no-repeat;
+  transition: opacity .5s ease;
+  z-index: 2;
+}
+.story-visual.playing .video-poster { opacity: 0; pointer-events: none; }
+.story-visual .play-btn {
+  position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%);
+  z-index: 3; pointer-events: none;
+  width: 72px; height: 72px;
+  border-radius: 50%;
+  border: 2px solid rgba(255,255,255,.7);
+  background: rgba(0,0,0,.35);
+  backdrop-filter: blur(4px);
+  display: flex; align-items: center; justify-content: center;
+  transition: all .35s ease;
+}
+.story-visual:hover .play-btn {
+  border-color: #fff;
+  background: rgba(0,0,0,.5);
+  transform: translate(-50%,-50%) scale(1.08);
+}
+.story-visual.playing .play-btn { opacity: 0; }
+.story-visual .play-btn::after {
+  content: "";
+  width: 0; height: 0;
+  border-style: solid;
+  border-width: 14px 0 14px 24px;
+  border-color: transparent transparent transparent #fff;
+  margin-left: 4px;
+}
+.video-caption {
+  margin-top: 12px;
+  font-family: "Montserrat", sans-serif;
+  font-size: 10px; letter-spacing: .12em;
+  color: var(--muted);
 }
 
 /* ===== Terroir Section ===== */
@@ -359,7 +392,7 @@ footer {
   .terroir .section-inner {
     grid-template-columns: 1fr; gap: 48px;
   }
-  .story-visual { order: -1; max-width: 320px; justify-self: center; }
+  .story-visual { order: -1; max-width: 100%; justify-self: center; }
   .terroir-visual { order: -1; max-width: 320px; justify-self: center; }
 
   .terroir-facts { gap: 24px 16px; }
@@ -454,9 +487,14 @@ footer {
         最终的酒应该是什么样？平衡的，优雅的，纯净的，热烈的。像这座山本身。
       </p>
     </div>
-    <div class="story-visual">
-      <img src="images/oak-barrel.jpg" alt="大红泼橡木桶">
+    <div class="story-visual" id="storyVideo">
+      <video preload="none" muted playsinline poster="images/hero-bg.jpg">
+        <source src="images/promo-video.mp4" type="video/mp4">
+      </video>
+      <div class="video-poster" style="background-image:url('images/hero-bg.jpg')"></div>
+      <div class="play-btn"></div>
     </div>
+    <p class="video-caption" data-i18n="story.video">品牌宣传片 · Brand Film — 纯净与热烈</p>
   </div>
 </section>
 
@@ -642,6 +680,7 @@ const dict = {
                     en: 'We believe great wine is grown — 70% in the vineyard, 30% in the cellar. Every bottle of Da Hong Po is the most honest expression of this extreme land.' },
   'story.p3':     { cn: '这里的葡萄藤长在海拔2200到3068米的山坡上。强紫外线、平均20度昼夜温差、比世界上很多产区多出30到60天的生长期——果实小、皮厚、风味高度浓缩。好的酿造，从好的原料开始——时间够长、阳光够烈、夜晚够凉。',
                     en: 'Our vines grow on mountain slopes between 2,200 and 3,068 meters. Intense UV, an average 20°C diurnal shift, a growing season 30–60 days longer than many regions around the world — small berries, thick skins, deeply concentrated flavors. Great winemaking starts with great fruit — long days, fierce sun, and cold nights.' },
+  'story.video':  { cn: '品牌宣传片 · 纯净与热烈', en: 'Brand Film · Purity & Passion' },
   'story.p4':     { cn: '最终的酒应该是什么样？平衡的，优雅的，纯净的，热烈的。像这座山本身。',
                     en: 'What should the wine taste like? Balanced. Elegant. Pure. Fierce. Like the mountain itself.' },
 
@@ -770,6 +809,24 @@ document.querySelectorAll('.wine-card[data-sheet]').forEach(card => {
     }
   });
 });
+
+// ===== Story Video =====
+const storyVideoWrap = document.getElementById('storyVideo');
+if (storyVideoWrap) {
+  const video = storyVideoWrap.querySelector('video');
+  storyVideoWrap.addEventListener('click', () => {
+    if (video.paused) {
+      video.play();
+      storyVideoWrap.classList.add('playing');
+    } else {
+      video.pause();
+      storyVideoWrap.classList.remove('playing');
+    }
+  });
+  video.addEventListener('ended', () => {
+    storyVideoWrap.classList.remove('playing');
+  });
+}
 
 // Tap elsewhere to dismiss
 document.addEventListener('click', (e) => {
